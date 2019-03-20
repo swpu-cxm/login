@@ -1,0 +1,34 @@
+
+
+{% extends 'base.html' %}
+{% block head %}
+    <title>找回密码</title>
+{% endblock %}
+{% block content %}
+    <div class="form-horizontal col-md-offset-3" id="login_form">
+            <h3 class="form-title">FORGET</h3>
+            <div class="col-md-9">
+                <form action="{{ request.full_path }}" method="post">
+                    {{ form.csrf_token }}
+                    <div class="form-group">
+                        {{ form.method }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.mail }}
+                    </div>
+                    <div class="form-group">
+                        {% with messages = get_flashed_messages(category_filter=['error','ok']) %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <p style="text-align: center;color: red;">{{ message }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    <div class="form-group ">
+                        {{ form.submit }}
+                    </div>
+                </form>
+            </div>
+        </div>
+{% endblock %}
