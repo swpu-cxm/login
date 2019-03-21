@@ -14,5 +14,5 @@
     $ pipenv shell\
     $ cd Login\
 **注意,请在settings.py文件中配置你的数据库路径和SMTP邮箱服务器**\
-    $ flask run\
+    $ flask run
     
