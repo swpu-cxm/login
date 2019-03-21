@@ -5,14 +5,14 @@
 * 登录,通过flask_login模块实现
 
 新建一个目录
-然后输入git bash:
-    $ git clone git@github.com:swpu-cxm/login.git
-将工程克隆到本地
-如何使用项目:
-    $ cd login
-    $ pienv install --dev
-    $ pipenv shell
-    $ cd Login
- ***注意,请在settings.py文件中配置你的数据库路径和SMTP邮箱服务器**
-    $ flask run
+然后git bash:\
+    $ git clone git@github.com:swpu-cxm/login.git\
+将工程克隆到本地\
+如何使用项目:\
+    $ cd login\
+    $ pienv install --dev\
+    $ pipenv shell\
+    $ cd Login\
+**注意,请在settings.py文件中配置你的数据库路径和SMTP邮箱服务器**\
+    $ flask run\
     
