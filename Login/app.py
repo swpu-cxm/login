@@ -7,7 +7,7 @@ from Login import app, db
 from sqlalchemy import or_
 from Login.untils import decode_msg, encode_msg, send_email
 from Login import login_manager
-from flask_login import login_user,logout_user,login_required
+from flask_login import login_user, logout_user, login_required
 
 
 @login_manager.user_loader
@@ -95,7 +95,7 @@ def confirm(confirm_url):
         db.session.commit()
         return redirect(url_for('login'))
     except Exception as e:
-        return render_template('404.html')
+        return render_template('404.html'), 404
 
 
 @app.route('/forget', methods=['GET', 'POST'])
@@ -112,13 +112,14 @@ def forget():
         user_exist = User.query.filter(or_(User.username == mail, User.mail == mail)).first()
         if user_exist:
             msg = {'username': user_exist.username, 'mail': user_exist.mail, 'password_hash': user_exist.password}
-            send_email(messgage=msg,email=user_exist.mail, way=2)
-            flash('验证链接已发送至您的邮箱','ok')
+            send_email(messgage=msg, email=user_exist.mail, way=2)
+            flash('验证链接已发送至您的邮箱', 'ok')
         else:
-            flash('用户名或邮箱不存在','error')
-    return render_template('forget.html',form=form)
+            flash('用户名或邮箱不存在', 'error')
+    return render_template('forget.html', form=form)
 
-@app.route('/change/<string:change_url>',methods=['GET', 'POST'])
+
+@app.route('/change/<string:change_url>', methods=['GET', 'POST'])
 def change(change_url):
     """
     更改密码路由,,首先解码动态url,成功后用户输入要更改的密码
@@ -138,9 +139,9 @@ def change(change_url):
                 user.password = generate_password_hash(password)
                 db.session.commit()
                 return redirect(url_for('login'))
-        return render_template('change.html',form=form)
+        return render_template('change.html', form=form)
     except Exception:
-        return render_template('404.html')
+        return render_template('404.html'), 404
 
 
 @app.route('/')
@@ -160,6 +161,18 @@ def admin():
     :return:
     """
     return render_template('login_status.html')
+
+
+@app.errorhandler(404)
+def miss(e):
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def error(e):
+    return render_template('500.html'), 500
+
+
 
 if __name__ == '__main__':
     app.run()
